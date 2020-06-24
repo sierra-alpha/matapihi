@@ -3,12 +3,11 @@ FROM debian:latest
 
 MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
 
-
 RUN apt-get update \
     && apt-get install -y \
     x11vnc \
     libxrandr2 \
-    xvfb \
+    xvfb \ 
     git \
     python \
     emacs \
@@ -37,6 +36,8 @@ RUN --mount=type=secret,id=root_password \
 RUN export USER=shaun \
     && useradd -U --uid 1000 --shell /bin/bash --create-home $USER \
     && unset USER
+
+WORKDIR /home/shaun
 
 # Use Commandline Args for name
 USER shaun
