@@ -4,25 +4,27 @@
 # How to use this file
 # If you don't want to be bugged for input then fill out the relevant fields
 # Then the docker build py command will read them from here
+
 # Make sure the passwords saved in the relevant files in the secrets
 # section exist, and are greater than 6 chars if you don't want to be
 # prompted to enter a new one
 
 [build-args]
-user = ''
-dotfile-git-repo = ''
-ssh-email = ''
+D_USER = ''
+DOTFILE_GIT_REPO = ''
+SSH_EMAIL = ''
 
 # Not the actual secrets but the path to the file that contains them
 [secrets]
-root-password = 'root_password.txt'
-vnc-password = 'vnc_password.txt'
-user-password = 'user_password.txt'
+root_password = 'root_password.txt'
+vnc_password = 'vnc_password.txt'
+user_password = 'user_password.txt'
 
+# Language for prompts of missing values (currently only english implemented)
 [language]
-english.user = 'user name'
-english.dotfile-git-repo = 'dotfile git repository address'
-english.ssh-email = 'email address to use for ssh key-gen'
-english.root-password = 'root password'
-english.vnc-password = 'vnc password'
-english.user-password = 'user password'
+english.D_USER = 'user name'
+english.DOTFILE_GIT_REPO = 'dotfile git repository address'
+english.SSH_EMAIL = 'email address to use for ssh key-gen'
+english.root_password = 'root password'
+english.vnc_password = 'vnc password'
+english.user_password = 'user password'

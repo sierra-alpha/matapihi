@@ -2,6 +2,7 @@
 import argparse
 import getpass
 import os
+import subprocess
 import toml
 
 
@@ -31,6 +32,22 @@ def prompt_for_value(key, build_vars):
     return secret
 
 
+def build_build_args(build_vars):
+    return [item for sublist in [["--build-arg", key+"="+value]
+                                 for key,value
+                                 in build_vars["build-args"].items()]
+            for item in sublist]
+
+
+    # rc=my_secret.txt --secret id=root_password,src=my_secret.txt .
+def build_secret_args(build_vars):
+    return [item for sublist in
+            [["--secret", "id=" + key + ",src=" + value]
+             for key,value
+             in build_vars["secrets"].items()]
+            for item in sublist]
+
+
 def main(raw_args=None):
 
     parser = argparse.ArgumentParser(
@@ -55,8 +72,16 @@ def main(raw_args=None):
     # If there is no values in a field then prompt for them
     check_args(build_vars)
 
-    #     DOCKER_BUILDKIT=1 docker build --no-cache --secret id=vnc_password,s
-    # rc=my_secret.txt --secret id=root_password,src=my_secret.txt .
+    import pdb; pdb.set_trace()
+
+    mod_env = os.environ.copy()
+    mod_env["DOCKER_BUILDKIT"] = "1"
+
+    subprocess.run(["docker", "build"]
+                   + build_build_args(build_vars)
+                   + build_secret_args(build_vars)
+                   + ["."],
+                   env=mod_env )
 
     if not leave_dirty:
         for value in build_vars["secrets"].values():
