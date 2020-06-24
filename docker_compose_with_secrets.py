@@ -58,6 +58,7 @@ def main(raw_args=None):
     parser.add_argument(
         "-d",
         "--leave-dirty",
+        action="store_true",
         default=False,
         help=("If set this will leave the password files "
               "in the directory when finished")
@@ -71,8 +72,6 @@ def main(raw_args=None):
 
     # If there is no values in a field then prompt for them
     check_args(build_vars)
-
-    import pdb; pdb.set_trace()
 
     mod_env = os.environ.copy()
     mod_env["DOCKER_BUILDKIT"] = "1"
