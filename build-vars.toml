@@ -10,9 +10,10 @@
 # prompted to enter a new one
 
 [build-args]
-D_USER = ''
-DOTFILE_GIT_REPO = ''
-SSH_EMAIL = ''
+D_USER = 'default'
+DOTFILE_GIT_REPO = 'https://github.com/Sierra-Alpha/dot
+files.git'
+SSH_EMAIL = 'default@example.com'
 
 # Not the actual secrets but the path to the file that contains them
 [secrets]

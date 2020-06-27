@@ -57,4 +57,4 @@ RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
     && eval "$(ssh-agent -s)" \
     && ssh-add ~/.ssh/id_rsa
 
-CMD ["/bin/bash", "emacs"]
+CMD ["/bin/bash", "x11vnc -forever -create"]
