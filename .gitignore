@@ -1,1 +1,5 @@
-private key shh
+*
+!docker_compose_with_secrets.py
+!Dockerfile
+!requirements.txt
+!build-vars.toml

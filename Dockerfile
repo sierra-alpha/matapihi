@@ -57,4 +57,18 @@ RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
     && eval "$(ssh-agent -s)" \
     && ssh-add ~/.ssh/id_rsa
 
-CMD ["/bin/bash", "x11vnc -forever -create"]
+# So pull at run time to get first config and then it's fater each time?
+
+## Probably xserver settings
+# start directly to emacs when xserver vnc starts
+# set up screnn resolutions for viewing
+# pass through autorepeating keystrokes
+
+## Dev GH options
+# do git hub key copy in an easy way (maybe use www in emacs?)
+
+# DONE: figure out the emacs .dotfile situation with stow
+
+
+
+CMD ["x11vnc", "-forever", "-create"]
