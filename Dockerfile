@@ -65,5 +65,5 @@ RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
 # DONE: figure out the emacs .dotfile situation with stow
 
 
-
+CMD ["xrandr", "--fb", "1280x720"]
 CMD ["x11vnc", "-forever", "-create"]
