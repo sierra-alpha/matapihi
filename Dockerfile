@@ -6,7 +6,7 @@ MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
 RUN apt-get update \
     && apt-get install -y \
     x11vnc \
-    libxrandr2 \
+    x11-xserver-utils \
     xvfb \ 
     git \
     python \
@@ -42,11 +42,6 @@ WORKDIR /home/shaun
 # Use Commandline Args for name
 USER shaun
 
-RUN git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d \
-    && cd ~/.emacs.d \
-    && git checkout develop \
-    && cd ~
-
 # Use Commandline Args for dotfiles repo
 RUN git clone https://github.com/Sierra-Alpha/dotfiles.git ~/dotfiles \
     && cd ~/dotfiles \
@@ -57,7 +52,7 @@ RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
     && eval "$(ssh-agent -s)" \
     && ssh-add ~/.ssh/id_rsa
 
-# So pull at run time to get first config and then it's fater each time?
+# So pull at run time to get first config and then it's faster each time?
 
 ## Probably xserver settings
 # start directly to emacs when xserver vnc starts
