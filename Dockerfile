@@ -7,7 +7,8 @@ RUN apt-get update \
     && apt-get install -y \
     x11vnc \
     x11-xserver-utils \
-    xvfb \ 
+    xinit \
+    xvfb \
     git \
     python \
     emacs \
@@ -55,8 +56,8 @@ RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
 # So pull at run time to get first config and then it's faster each time?
 
 ## Probably xserver settings
-# start directly to emacs when xserver vnc starts
-# set up screnn resolutions for viewing
+# DONE: start directly to emacs when xserver vnc starts
+# Kinda Done, deafaulted to something nice. set up screnn resolutions for viewing
 # pass through autorepeating keystrokes
 
 ## Dev GH options
@@ -64,6 +65,6 @@ RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
 
 # DONE: figure out the emacs .dotfile situation with stow
 
-
-CMD ["xrandr", "--fb", "1280x720"]
-CMD ["x11vnc", "-forever", "-create"]
+ADD startup.sh /
+ADD .xinitrc /home/shaun/
+CMD ["bash", "-c", "/startup.sh"]
