@@ -28,8 +28,8 @@ RUN mkdir /usr/share/fonts/opentype \
     && cd /usr/share/fonts/opentype \
     && wget \
     https://github.com/adobe-fonts/source-code-pro/releases/download/variable-fonts/SourceCodeVariable-Roman.otf \
-    && cd ~ \
-    && fc-cache -f -v
+    && fc-cache -f -v \
+    && cd ~
 
 RUN --mount=type=secret,id=root_password \
     printf "root:"$(cat /run/secrets/root_password) | chpasswd
@@ -62,10 +62,15 @@ RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
 # pass through autorepeating keystrokes
 
 ## Dev GH options
-# do git hub key copy in an easy way (maybe use www in emacs?)
+# Done do git hub key copy in an easy way (maybe use www in emacs?)
 
 # DONE: figure out the emacs .dotfile situation with stow
 
-ADD startup /usr/local/bin/
+ADD first-run /usr/local/bin/
+RUN ["bash", "-c", "first-run"]
+
+# Use User variable
 ADD .xinitrc /home/shaun/
+
+ADD startup /usr/local/bin/
 CMD ["bash", "-c", "startup"]
