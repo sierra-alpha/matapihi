@@ -65,6 +65,6 @@ RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
 
 # DONE: figure out the emacs .dotfile situation with stow
 
-ADD startup.sh /
+ADD startup /usr/local/bin/
 ADD .xinitrc /home/shaun/
-CMD ["bash", "-c", "/startup.sh"]
+CMD ["bash", "-c", "startup"]
