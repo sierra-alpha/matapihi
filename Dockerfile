@@ -5,16 +5,17 @@ MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
 
 RUN apt-get update \
     && apt-get install -y \
-    x11vnc \
-    x11-xserver-utils \
-    xinit \
-    xvfb \
+    curl \
+    emacs \
     git \
     python \
-    emacs \
-    wget \
     stow \
-    xclip
+    wget \
+    x11vnc \
+    x11-xserver-utils \
+    xclip \
+    xinit \
+    xvfb
 
 RUN mkdir ~/.vnc
 
