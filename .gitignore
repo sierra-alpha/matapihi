@@ -3,3 +3,6 @@
 !Dockerfile
 !requirements.txt
 !build-vars.toml
+!first-run
+!.xinitrc
+!.startup

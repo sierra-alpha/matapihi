@@ -49,7 +49,7 @@ USER shaun
 RUN git clone https://github.com/Sierra-Alpha/dotfiles.git ~/dotfiles \
     && cd ~/dotfiles \
     # && stow --adopt -t ~ * \
-    && stow -t ~ * \
+    && stow -t ~ *
     # && git reset HEAD --hard
 
 # Use Command line args for key email
