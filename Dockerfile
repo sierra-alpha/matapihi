@@ -76,4 +76,5 @@ ADD .xinitrc /home/shaun/
 
 ADD startup /usr/local/bin/
 SHELL ["/bin/bash", "-c"]
+
 CMD ["startup"]
