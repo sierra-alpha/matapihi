@@ -3,11 +3,13 @@ FROM debian:latest
 
 MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
 
+# Move these to loadable file.
 RUN apt-get update \
     && apt-get install -y \
     curl \
     emacs \
     git \
+    inotify-tools \
     python \
     stow \
     wget \
@@ -73,4 +75,5 @@ RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
 ADD .xinitrc /home/shaun/
 
 ADD startup /usr/local/bin/
-CMD ["bash", "-c", "startup"]
+SHELL ["/bin/bash", "-c"]
+CMD ["startup"]

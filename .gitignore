@@ -1,4 +1,5 @@
 *
+!.gitignore
 !docker_compose_with_secrets.py
 !Dockerfile
 !requirements.txt
