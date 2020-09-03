@@ -10,7 +10,7 @@ RUN apt-get update \
     emacs \
     git \
     inotify-tools \
-    python \
+    python3 \
     stow \
     wget \
     x11vnc \
