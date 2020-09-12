@@ -3,16 +3,9 @@ FROM debian:latest
 
 MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
 
-# Move these to loadable file.
+# Check all of these are required
 RUN apt-get update \
     && apt-get install -y \
-    curl \
-    emacs \
-    git \
-    inotify-tools \
-    python3 \
-    stow \
-    wget \
     x11vnc \
     x11-xserver-utils \
     xinit \
@@ -25,14 +18,14 @@ RUN --mount=type=secret,id=vnc_password \
     && x11vnc -storepasswd $TMP ~/.vnc/passwd \
     && unset TMP
 
-RUN mkdir /usr/share/fonts/source \
-    && cd /usr/share/fonts/source \
-    && wget \
-    https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.tar.gz \
-    && tar -xzvf 1.050R-it.tar.gz \
-    && rm 1.050R-it.tar.gz \
-    && fc-cache -f -v \
-    && cd ~
+# RUN mkdir /usr/share/fonts/source \
+#     && cd /usr/share/fonts/source \
+#     && wget \
+#     https://github.com/adobe-fonts/source-code-pro/archive/2.030R-ro/1.050R-it.tar.gz \
+#     && tar -xzvf 1.050R-it.tar.gz \
+#     && rm 1.050R-it.tar.gz \
+#     && fc-cache -f -v \
+#     && cd ~
 
 RUN --mount=type=secret,id=root_password \
     printf "root:"$(cat /run/secrets/root_password) | chpasswd
@@ -46,18 +39,6 @@ WORKDIR /home/shaun
 
 # Use Commandline Args for name
 USER shaun
-
-# Use Commandline Args for dotfiles repo, comment outs allow overwiriting system files
-RUN git clone https://github.com/Sierra-Alpha/dotfiles.git ~/dotfiles \
-    && cd ~/dotfiles \
-    # && stow --adopt -t ~ * \
-    && stow -t ~ *
-    # && git reset HEAD --hard
-
-# Use Command line args for key email
-RUN printf "\n\n\n" | ssh-keygen -t rsa -b 4096 -C shaun@sierraalpha.com \
-    && eval "$(ssh-agent -s)" \
-    && ssh-add ~/.ssh/id_rsa
 
 # So pull at run time to get first config and then it's faster each time?
 
