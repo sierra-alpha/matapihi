@@ -6,6 +6,7 @@ MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
 # Check all of these are required
 RUN apt-get update \
     && apt-get install -y \
+    sudo \
     x11vnc \
     x11-xserver-utils \
     xinit \
@@ -27,18 +28,18 @@ RUN --mount=type=secret,id=vnc_password \
 #     && fc-cache -f -v \
 #     && cd ~
 
-RUN --mount=type=secret,id=root_password \
-    printf "root:"$(cat /run/secrets/root_password) | chpasswd
-
 # Use Command Line Args for name
-RUN export USER=shaun \
-    && useradd -U --uid 1000 --shell /bin/bash --create-home $USER \
-    && unset USER
+ARG D_USER
+RUN useradd -U --uid 1000 --shell /bin/bash --create-home "$D_USER"
+RUN usermod -aG sudo "$D_USER"
 
-WORKDIR /home/shaun
+RUN --mount=type=secret,id=user_password \
+    printf $D_USER":"$(cat /run/secrets/user_password) | chpasswd
+
+WORKDIR /home/"$D_USER"
 
 # Use Commandline Args for name
-USER shaun
+USER "$D_USER"
 
 # So pull at run time to get first config and then it's faster each time?
 
@@ -53,9 +54,8 @@ USER shaun
 # DONE: figure out the emacs .dotfile situation with stow
 
 # Use User variable
-ADD .xinitrc /home/shaun/
+ADD .xinitrc /home/"$D_USER"/
 
 ADD startup /usr/local/bin/
-SHELL ["/bin/bash", "-c"]
 
 CMD ["startup"]

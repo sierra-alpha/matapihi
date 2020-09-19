@@ -10,9 +10,7 @@
 # prompted to enter a new one
 
 [build-args]
-D_USER = 'default'
-DOTFILE_GIT_REPO = 'https://github.com/Sierra-Alpha/dotfiles.git'
-SSH_EMAIL = 'default@example.com'
+D_USER = 'shaun'
 
 # Not the actual secrets but the path to the file that contains them
 [secrets]
@@ -23,8 +21,6 @@ user_password = 'user_password.txt'
 # Language for prompts of missing values (currently only english implemented)
 [language]
 english.D_USER = 'user name'
-english.DOTFILE_GIT_REPO = 'dotfile git repository address'
-english.SSH_EMAIL = 'email address to use for ssh key-gen'
 english.root_password = 'root password'
 english.vnc_password = 'vnc password'
 english.user_password = 'user password'
