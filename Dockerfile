@@ -7,6 +7,7 @@ MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
 RUN apt-get update \
     && apt-get install -y \
     sudo \
+    wget \
     x11vnc \
     x11-xserver-utils \
     xinit \
@@ -55,6 +56,8 @@ USER "$D_USER"
 
 # Use User variable
 ADD .xinitrc /home/"$D_USER"/
+ADD .matapihi_run /home/"$D_USER"/
+
 
 ADD startup /usr/local/bin/
 

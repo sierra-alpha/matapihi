@@ -1,0 +1,4 @@
+#!/bin/bash -x
+
+export X11VNC_CREATE_GEOM=1920x1080x24
+x11vnc -repeat -forever -create

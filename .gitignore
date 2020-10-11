@@ -6,4 +6,5 @@
 !build-vars.toml
 !.matapihi_run
 !.xinitrc
+!startup
 !readme.md
