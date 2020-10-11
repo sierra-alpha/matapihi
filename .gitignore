@@ -4,7 +4,7 @@
 !Dockerfile
 !requirements.txt
 !build-vars.toml
-!first-run
+!.matapihi_run
 !.xinitrc
 !.startup
 !readme.md
