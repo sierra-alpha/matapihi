@@ -1,32 +1,45 @@
 #!/bin/bash
 
-m_start="~/.matapihi_start"
-m_exit="~/.matapihi_exit"
+m_start=~/.matapihi_start
+m_exit=~/.matapihi_exit
+m_run=~/.matapihi_run
 
-get_scripts (in_out, output) {
+get_scripts () {
+    local in_out output script_url
+    in_out="$1"
+    output="$2"
+
     echo "If your seeing this it's either the first time you've connected to Matapihi"
     echo "or your $output script has failed, you can try to set up a new script."
     echo "A blank entry will set the script to call bash"
     echo "The following will ovewrite any $output script"
-    echo "('ctrl-c' to cancel, '. ~/.xinit_prompt' to restart)"
+    echo "('ctrl-c' to cancel, '. $m_run' to restart)"
     echo "Enter the script url (for wget) you want to run when $in_out Matapihi: "
     read script_url
+
+    # If input is blank
     if test -z "$script_url"
     then
-        echo "#!/bin/bash \n\nbash" > "$output"
-        chmod +x "$output"
+	echo "Writing base bash script"
+        printf "#!/bin/bash \n\nbash" > "$output"
     else
-        wget -O "$output" "$script_url"
-        echo "You should check the script is as you expect before you run it, opening 'less'"
-        less "$ouptut"
-        echo "Are you happy for this script to execute? (d to destroy it, anything else to continue)"
-        read destroy
-        if [[ "$destroy" == "d" ]]
-        then
-            rm "$output"
-        else
-           chmod +x "$output"
-        fi
+	echo "Writing custom script $script_url"
+        wget -O "$output" -- "$script_url" && echo "Download complete"
+    fi
+
+    echo "You should check the script is as you expect before you run it,"
+    echo "Press enter to continue opening with 'less'"
+    echo "Once in less you can press q to exit less"
+    echo "Then d to delete the file or any other key to continue"
+    read
+    less "$output"
+    echo "Are you happy for this script to execute? (d to destroy it, anything else to continue)"
+    read destroy
+    if [[ "$destroy" == "d" ]]
+    then
+        rm "$output" && echo "$output removed"
+    else
+       chmod +x "$output"
     fi
 }
 
@@ -34,24 +47,25 @@ get_scripts (in_out, output) {
 check_files () {
     if [[ ! -f "$m_start" ]]
     then
-        get_scripts("an initial client connects to", "$m_start")
+        get_scripts "an initial client connects to" "$m_start"
     fi
 
     if [[ ! -f "$m_exit" ]]
     then
-        get_scripts("the final client disconnects from", "$m_exit")
+        get_scripts "the final client disconnects from" "$m_exit"
         echo "You may like to call $m_exit to test the disconnect script,"
         echo "Note: doing so will likely destroy the session"
     fi
 }
 
 
-while [[ ! -f "$m_start" && ! -f "$m_exit" ]]; do
-    check_files()
+while [[ ! -f "${m_start}" || ! -f "${m_exit}" ]]; do
+    echo checking files
+    check_files
 done
 
-"$(m_start)" \
+"$($m_start)" \
     || echo "Start script failed, try editing $m_start" \
-        && echo "or removing it and retrying it by calling ~/.matapihi_run" \
-        && exit(1)
+        && echo "or removing it and retrying it by calling $m_run" \
+        && exit 1
 
