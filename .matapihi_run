@@ -64,7 +64,7 @@ while [[ ! -f "${m_start}" || ! -f "${m_exit}" ]]; do
     check_files
 done
 
-"$($m_start)" \
+. "$($m_start)" \
     || echo "Start script failed, try editing $m_start" \
         && echo "or removing it and retrying it by calling $m_run" \
         && exit 1

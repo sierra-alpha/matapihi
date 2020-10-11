@@ -7,5 +7,5 @@ fs=10
 # if they dont exist then run them and exit to bash if anything goes wrong or
 # user exits program, instead of closing client.
 xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize -e bash -c \
-      "~/.matapihi_run || bash"
+      "{ . ~/.matapihi_run || bash; }"
 
