@@ -7,5 +7,5 @@ fs=10
 # if they dont exist then run them and exit to bash if anything goes wrong or
 # user exits program, instead of closing client.
 nohup xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize -e ~/.matapihi_run &
-xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize
+xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize -c bash
 
