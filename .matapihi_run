@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -i
 
 m_start=~/.matapihi_start
 m_exit=~/.matapihi_exit
@@ -67,5 +67,4 @@ done
 . "$($m_start)" \
     || echo "Start script failed, try editing $m_start" \
         && echo "or removing it and retrying it by calling $m_run" \
-        && exit 1
 

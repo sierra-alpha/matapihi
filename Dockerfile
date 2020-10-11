@@ -6,6 +6,7 @@ MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
 # Check all of these are required
 RUN apt-get update \
     && apt-get install -y \
+    less \
     sudo \
     wget \
     x11vnc \
