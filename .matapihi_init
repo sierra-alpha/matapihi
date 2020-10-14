@@ -1,8 +1,8 @@
-#! /bin/bash -i
+#! /bin/bash
 
 m_start=~/.matapihi_start
 m_exit=~/.matapihi_exit
-m_run=~/.matapihi_run
+m_init=~/.matapihi_init
 
 get_scripts () {
     local in_out output script_url
@@ -13,7 +13,7 @@ get_scripts () {
     echo "or your $output script has failed, you can try to set up a new script."
     echo "A blank entry will set the script to call bash"
     echo "The following will ovewrite any $output script"
-    echo "('ctrl-c' to cancel, '. $m_run' to restart)"
+    echo "('ctrl-c' to cancel, '. $m_init' to restart)"
     echo "Enter the script url (for wget) you want to run when $in_out Matapihi: "
     read script_url
 
@@ -64,7 +64,7 @@ while [[ ! -f "${m_start}" || ! -f "${m_exit}" ]]; do
     check_files
 done
 
-. "$($m_start)" \
+. "$m_start" \
     || echo "Start script failed, try editing $m_start" \
-        && echo "or removing it and retrying it by calling $m_run" \
+        && echo "or removing it and retrying it by calling $m_init" \
 
