@@ -9,8 +9,9 @@ RUN apt-get update \
     less \
     moreutils \
     sudo \
+    tigervnc-standalone-server \
     wget \
-    tigervnc-standalone-server
+    xterm
 
 ARG D_USER
 RUN useradd -U --uid 1000 --shell /bin/bash --create-home "$D_USER"
