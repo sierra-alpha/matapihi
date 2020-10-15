@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1.0-experimental
 FROM debian:latest
 
-MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
+MAINTAINER Shaun Alexander <shaun@sierraalpha.co.nz>
 
 # Check all of these are required
 RUN apt-get update \
@@ -58,7 +58,7 @@ USER "$D_USER"
 
 # Use User variable
 ADD .xinitrc /home/"$D_USER"/
-ADD .matapihi_run /home/"$D_USER"/
+ADD .matapihi_init /home/"$D_USER"/
 
 
 ADD startup /usr/local/bin/
