@@ -6,5 +6,8 @@ fs=10
 # Launch xterm with my favourite colour scheme and ask user for start up scripts
 # if they dont exist then run them and exit to bash if anything goes wrong or
 # user exits program, instead of closing client.
-xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize -e "~/.matapihi_init" &
-xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize -e "bash"
+xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize -e \
+      "~/.matapihi_init 2>&1 \
+      | tee >(ts '[%Y-%m-%d %H:%M:%S]' \
+      >> .matapihi.log); \
+      bash -i"

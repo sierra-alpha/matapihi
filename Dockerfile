@@ -7,6 +7,7 @@ MAINTAINER Shaun Alexander <shaun@sierra-alpha.co.nz>
 RUN apt-get update \
     && apt-get install -y \
     less \
+    moreutils \
     sudo \
     wget \
     x11vnc \
