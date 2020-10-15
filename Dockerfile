@@ -17,15 +17,15 @@ ARG D_USER
 RUN useradd -U --uid 1000 --shell /bin/bash --create-home "$D_USER"
 RUN usermod -aG sudo "$D_USER"
 
+RUN --mount=type=secret,id=vnc_password \
+    export TMP=$(cat /run/secrets/vnc_password) \
+    && printf "$TMP\n$TMP\n\n" | sudo -u "$D_USER" vncpasswd \
+    && unset TMP
+
 RUN --mount=type=secret,id=user_password \
     printf $D_USER":"$(cat /run/secrets/user_password) | chpasswd
 
 WORKDIR /home/"$D_USER"
-
-RUN --mount=type=secret,id=vnc_password \
-    export TMP=$(cat /run/secrets/vnc_password) \
-    && printf "$TMP\n$TMP\n\n" | vncpasswd \
-    && unset TMP
 
 USER "$D_USER"
 
