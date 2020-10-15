@@ -12,13 +12,6 @@ RUN apt-get update \
     wget \
     tigervnc-standalone-server
 
-RUN mkdir ~/.vnc
-
-RUN --mount=type=secret,id=vnc_password \
-    export TMP=$(cat /run/secrets/vnc_password) \
-    && x11vnc -storepasswd $TMP ~/.vnc/passwd \
-    && unset TMP
-
 ARG D_USER
 RUN useradd -U --uid 1000 --shell /bin/bash --create-home "$D_USER"
 RUN usermod -aG sudo "$D_USER"
@@ -28,6 +21,11 @@ RUN --mount=type=secret,id=user_password \
 
 WORKDIR /home/"$D_USER"
 
+RUN --mount=type=secret,id=vnc_password \
+    export TMP=$(cat /run/secrets/vnc_password) \
+    && printf "$TMP\n$TMP\n\n" | vncpasswd \
+    && unset TMP
+
 USER "$D_USER"
 
 ADD .xinitrc /home/"$D_USER"/
@@ -35,3 +33,4 @@ ADD .matapihi_init /home/"$D_USER"/
 
 ADD startup /usr/local/bin/
 CMD ["startup"]
+
