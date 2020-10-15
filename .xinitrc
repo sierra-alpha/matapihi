@@ -9,5 +9,5 @@ fs=10
 xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize -e \
       "~/.matapihi_init 2>&1 \
       | tee >(ts '[%Y-%m-%d %H:%M:%S]' \
-      >> .matapihi.log); \
-      bash -i"
+      >> .matapihi.log)"
+xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize -e "bash -i"
