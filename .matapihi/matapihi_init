@@ -13,7 +13,16 @@ get_scripts () {
     echo "or your $output script has failed, you can try to set up a new script."
     echo "A blank entry will set the script to call bash"
     echo "The following will ovewrite any $output script"
-    echo "('ctrl-c' to cancel, '. $m_init' to restart)"
+    echo "(Enter q here to quit before changes are made)"
+    read quit
+
+    # If input is q
+    if [[ "$quit" == "q" ]]
+    then
+	      echo "Run '. $m_init' when your ready to restart"
+        exit 1
+    fi
+
     echo "Enter the script url (for wget) you want to run when $in_out Matapihi: "
     read script_url
 
@@ -52,9 +61,9 @@ check_files () {
 
     if [[ ! -f "$m_exit" ]]
     then
-        get_scripts "the final client disconnects from" "$m_exit"
+        get_scripts "shutting eveything down before the final client disconnects from" "$m_exit"
         echo "You may like to call $m_exit to test the disconnect script,"
-        echo "Note: doing so will likely destroy the session"
+        echo "Note: doing so shouldn't kill the session"
     fi
 }
 
@@ -63,20 +72,4 @@ while [[ ! -f "${m_start}" || ! -f "${m_exit}" ]]; do
     echo checking files
     check_files
 done
-
-. "$m_start" \
-    || echo "Start script failed, try editing $m_start" \
-        && echo "or removing it and retrying it by calling $m_init"
-
-echo "Exiting Matapihi do you want to cancel? Blank to exit, any other key to cancel"
-read leavex
-
-# If input is blank
-if test -z "$leavex"
-then
-	  echo "Calling $m_exit"
-    . "$m_exit"
-fi
-
-exec $SHELL
 
