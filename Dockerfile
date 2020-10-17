@@ -17,6 +17,24 @@ ARG D_USER
 RUN useradd -U --uid 1000 --shell /bin/bash --create-home "$D_USER"
 RUN usermod -aG sudo "$D_USER"
 
+RUN echo "\
+#!/bin/bash -x
+
+while true
+do
+    vncserver \
+        -verbose \
+        -cleanstale \
+        -localhost no \
+        -geometry 1024x768 \
+        -depth 24 \
+        -fg \
+        :0
+    sleep 1
+done
+
+" > /usr/local/bin/startup && chmod +x /usr/local/bin/startup
+
 RUN --mount=type=secret,id=vnc_password \
     export TMP=$(cat /run/secrets/vnc_password) \
     && printf "$TMP\n$TMP\n\n" | sudo -u "$D_USER" vncpasswd \
@@ -29,9 +47,8 @@ WORKDIR /home/"$D_USER"
 
 USER "$D_USER"
 
-ADD .xinitrc /home/"$D_USER"/
+ADD .xinitrc /home/"$D_USER"/.vnc/Xvnc-session
 ADD .matapihi_init /home/"$D_USER"/
 
-ADD startup /usr/local/bin/
 CMD ["startup"]
 
