@@ -20,10 +20,10 @@ get_scripts () {
     # If input is blank
     if test -z "$script_url"
     then
-	echo "Writing base bash script"
-        printf "#! /bin/bash \n\nbash" > "$output"
+	      echo "Writing base bash script"
+        printf "#! /bin/bash \n\nbash\n" > "$output"
     else
-	echo "Writing custom script $script_url"
+	      echo "Writing custom script $script_url"
         wget -O "$output" -- "$script_url" && echo "Download complete"
     fi
 
@@ -66,5 +66,17 @@ done
 
 . "$m_start" \
     || echo "Start script failed, try editing $m_start" \
-        && echo "or removing it and retrying it by calling $m_init" \
+        && echo "or removing it and retrying it by calling $m_init"
+
+echo "Exiting Matapihi do you want to cancel? Blank to exit, any other key to cancel"
+read leavex
+
+# If input is blank
+if test -z "$leavex"
+then
+	  echo "Calling $m_exit"
+    . "$m_exit"
+fi
+
+exec $SHELL
 
