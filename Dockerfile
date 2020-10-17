@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1.0-experimental
 FROM debian:latest
 
-MAINTAINER Shaun Alexander <shaun@sierraalpha.co.nz>
+LABEL maintainer="shaun@sierraalpha.co.nz"
 
 # Check all of these are required
 RUN apt-get update \
@@ -29,9 +29,9 @@ WORKDIR /home/"$D_USER"
 
 USER "$D_USER"
 
-ADD Xvnc-session /home/"$D_USER"/.vnc/Xvnc-session
-ADD .matapihi /home/"$D_USER"/.matapihi
+COPY --chown="$D_USER" Xvnc-session /home/"$D_USER"/.vnc/Xvnc-session
+COPY --chown="$D_USER" .matapihi /home/"$D_USER"/.matapihi
 
-ADD startup /usr/local/bin/
+COPY --chown="$D_USER" startup /usr/local/bin/
 CMD ["startup"]
 

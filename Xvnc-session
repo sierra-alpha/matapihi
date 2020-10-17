@@ -1,5 +1,3 @@
-PATH=$PATH:~/.matapihi/matapihi
-
 bg=grey19
 fg=grey70
 fa='Source Code Pro'
@@ -9,4 +7,5 @@ fs=10
 # if they dont exist then run them and exit to bash if anything goes wrong or
 # user exits program, instead of closing client.
 xterm -bg "$bg" -fg "$fg" -fa "$fa" -fs "$fs" -bc -maximize -e \
-      "bash -i -c matapihi -r"
+      "bash -i -c \"PATH=$PATH:~/.matapihi; matapihi -r\""
+
