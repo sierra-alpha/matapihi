@@ -30,7 +30,7 @@ WORKDIR /home/"$D_USER"
 USER "$D_USER"
 
 ADD Xvnc-session /home/"$D_USER"/.vnc/Xvnc-session
-ADD .matapihi_init /home/"$D_USER"/
+ADD matapihi_init /home/"$D_USER"/.matapihi/matapihi_init
 
 ADD startup /usr/local/bin/
 CMD ["startup"]

@@ -1,10 +1,12 @@
 *
 !.gitignore
+!build-vars.toml
 !docker_compose_with_secrets.py
 !Dockerfile
-!requirements.txt
-!build-vars.toml
-!.matapihi_init
-!Xvnc-session
-!startup
+!matapihi
+!matapihi_init
 !readme.md
+!requirements.txt
+!startup
+!Xvnc-session
+

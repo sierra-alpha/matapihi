@@ -1,8 +1,8 @@
 #! /bin/bash
 
-m_start=~/.matapihi_start
-m_exit=~/.matapihi_exit
-m_init=~/.matapihi_init
+m_start=~/.matapihi/matapihi_start
+m_exit=~/.matapihi/matapihi_exit
+m_init=~/.matapihi/matapihi_init
 
 get_scripts () {
     local in_out output script_url
