@@ -1,0 +1,15 @@
+#!/bin/bash -x
+
+while true
+do
+    vncserver \
+        -verbose \
+        -cleanstale \
+        -localhost no \
+        -geometry 1024x768 \
+        -depth 24 \
+        -fg \
+        :0
+    sleep 1
+done
+

@@ -20,18 +20,15 @@ RUN usermod -aG sudo "$D_USER"
 RUN echo "\
 #!/bin/bash -x
 
-while true
-do
-    vncserver \
-        -verbose \
-        -cleanstale \
-        -localhost no \
-        -geometry 1024x768 \
-        -depth 24 \
-        -fg \
-        :0
-    sleep 1
-done
+vncserver \
+    -verbose \
+    -cleanstale \
+    -localhost no \
+    -geometry 1024x768 \
+    -depth 24 \
+    -fg \
+    -xstartup /home/$D_USER/.xinitrc \
+    :0
 
 " > /usr/local/bin/startup && chmod +x /usr/local/bin/startup
 
@@ -47,8 +44,9 @@ WORKDIR /home/"$D_USER"
 
 USER "$D_USER"
 
-ADD .xinitrc /home/"$D_USER"/.vnc/Xvnc-session
+ADD Xvnc-session /home/"$D_USER"/.vnc/Xvnc-session
 ADD .matapihi_init /home/"$D_USER"/
 
+ADD startup /usr/local/bin/
 CMD ["startup"]
 

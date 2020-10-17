@@ -5,6 +5,6 @@
 !requirements.txt
 !build-vars.toml
 !.matapihi_init
-!.xinitrc
+!Xvnc-session
 !startup
 !readme.md
