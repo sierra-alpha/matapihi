@@ -23,7 +23,7 @@ RUN --mount=type=secret,id=vnc_password \
     && unset TMP
 
 RUN --mount=type=secret,id=user_password \
-    printf $D_USER":"$(cat /run/secrets/user_password) | chpasswd
+    printf "$D_USER":"$(cat /run/secrets/user_password) | chpasswd
 
 WORKDIR /home/"$D_USER"
 
