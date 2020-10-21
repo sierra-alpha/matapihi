@@ -27,11 +27,16 @@ RUN --mount=type=secret,id=user_password \
 
 WORKDIR /home/"$D_USER"
 
+COPY Xvnc-session /home/"$D_USER"/.vnc/Xvnc-session
+COPY .matapihi /home/"$D_USER"/.matapihi
+COPY startup /usr/local/bin/
+
+RUN chown -R "$D_USER":"$D_USER" \
+    /home/"$D_USER"/.vnc/Xvnc-session \
+    /home/"$D_USER"/.matapihi \
+    /home/"$D_USER"/.matapihi/* \
+    /usr/local/bin/startup
+
 USER "$D_USER"
-
-COPY --chown="$D_USER" Xvnc-session /home/"$D_USER"/.vnc/Xvnc-session
-COPY --chown="$D_USER" .matapihi /home/"$D_USER"/.matapihi
-
-COPY --chown="$D_USER" startup /usr/local/bin/
 CMD ["startup"]
 

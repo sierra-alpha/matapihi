@@ -1,17 +1,29 @@
 #! /bin/bash
 
-m_start=~/.matapihi/matapihi_start
 m_exit=~/.matapihi/matapihi_exit
 m_init=~/.matapihi/matapihi_init
+m_log=~/.matapihi/matapihi.log
+m_start=~/.matapihi/matapihi_start
+
+
+log () {
+    if [ "$#" -ne 0 ]; then
+        printf '%s\n' "$@"
+    else
+        cat
+    fi | ts '[%Y-%m-%d %H:%M:%S]' >> "$m_log"
+}
+
 
 get_scripts () {
     local in_out output script_url
     in_out="$1"
     output="$2"
 
+    log "Prompting user for $output script"
     echo "If your seeing this it's either the first time you've connected to Matapihi"
     echo "or your $output script has failed, you can try to set up a new script."
-    echo "A blank entry will set the script to call bash"
+    echo "A blank entry will set the script to setup the default scripts"
     echo "The following will ovewrite any $output script"
     echo "(Enter q here to quit before changes are made)"
     read quit
@@ -19,6 +31,7 @@ get_scripts () {
     # If input is q
     if [[ "$quit" == "q" ]]
     then
+        log "User exited from $output prompt without providing a script"
 	      echo "Run '. $m_init' when your ready to restart"
         exit 1
     fi
@@ -29,26 +42,33 @@ get_scripts () {
     # If input is blank
     if test -z "$script_url"
     then
-	      echo "Writing base bash script"
-        printf "#! /bin/bash \n\nbash\n" > "$output"
+        echo "Writing base bash script" | tee >(log)
+        printf "#! /bin/bash\n\necho in $output\n" > "$output"
+        if [[ "$output" == "$m_start" ]]
+        then
+            printf "\necho starting bash prompt\nbash -i\n" >> "$output"
+        fi
     else
-	      echo "Writing custom script $script_url"
-        wget -O "$output" -- "$script_url" && echo "Download complete"
+	      echo "Writing custom script $script_url" | tee >(log)
+        wget -O "$output" -- "$script_url" \
+            && echo "Download complete" | tee >(log)
     fi
 
     echo "You should check the script is as you expect before you run it,"
-    echo "Press enter to continue opening with 'less'"
-    echo "Once in less you can press q to exit less"
+    echo "File will now open in a new window, Press enter once review is complete"
     echo "Then d to delete the file or any other key to continue"
     read
+
     less "$output"
     echo "Are you happy for this script to execute? (d to destroy it, anything else to continue)"
     read destroy
     if [[ "$destroy" == "d" ]]
     then
+        log "Script rejected - removing"
         rm "$output" && echo "$output removed"
     else
-       chmod +x "$output"
+        log "Set permissions to execute for $output"
+        chmod +x "$output"
     fi
 }
 
@@ -69,7 +89,6 @@ check_files () {
 
 
 while [[ ! -f "${m_start}" || ! -f "${m_exit}" ]]; do
-    echo checking files
+    echo checking files | tee >(log)
     check_files
 done
-

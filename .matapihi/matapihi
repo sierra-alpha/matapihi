@@ -53,45 +53,61 @@ m_start=~/.matapihi/matapihi_start
 m_run=~/.matapihi/matapihi
 
 
-{
-    case "$1" in
-        -c)
-            rm "$m_start" "$m_exit"
-            ;;
-        -h)
-            help
-            exit 0
-            ;;
-        -i)
-            . "$m_init"
-            ;;
-        -q)
-            echo "Exiting Matapihi do you want to cancel?"
-            echo "Blank to continue exiting, any other key to cancel"
-            read leavex
+log () {
+    if [ "$#" -ne 0 ]; then
+        printf '%s\n' "$@"
+    else
+        cat
+    fi | ts '[%Y-%m-%d %H:%M:%S]' >> "$m_log"
+}
 
-            # If input is blank
-            if test -z "$leavex"
-            then
-	              echo "Calling $m_exit"
-                . "$m_exit"
-                exit 0
-            fi
 
-            exec $SHELL
-            ;;
-        -r)
-            . "$m_init"
+log "Matapihi started with option $1"
+
+case "$1" in
+    -c)
+        log "In clear, removing $m_start & $m_exit"
+        rm "$m_start" "$m_exit" 2>&1 | tee >(log)
+        ;;
+    -h)
+        log "Displaying help"
+        help
+        exit 0
+        ;;
+    -i)
+        log "Starting init"
+        . "$m_init"
+        ;;
+    -q)
+        log "Prompt to leave matapihi"
+        echo "Exiting Matapihi do you want to cancel?"
+        echo "Blank to continue exiting, any other key to cancel"
+        read leavex
+
+        # If input is blank
+        if test -z "$leavex"
+        then
+            log "leaving matapihi"
+            echo "Calling $m_exit"
             . "$m_exit"
-            . "$m_run" -s
-            . "$m_run" -q
-            echo matapihi failed
-            ;;
-        -s)
-            . "$m_start" \
-                || echo "Start script failed, try editing \`$m_start\`" \
-                    && echo "or removing it and retrying by calling \`matapihi -i\`"
-            ;;
-    esac
-} 2>&1 | tee >(ts '[%Y-%m-%d %H:%M:%S]' >> "$m_log")
+            exit 0
+        fi
 
+        log "User doesn't want to exit, leaving them at a bash prompt"
+        exec /bin/bash -i
+        ;;
+    -r)
+        . "$m_init"
+        echo init complete, running $m_exit to refresh environment | tee >(log)
+        . "$m_exit"
+        . "$m_run" -s
+        . "$m_run" -q
+        echo "Matapihi failed" | tee >(log)
+        ;;
+    -s)
+        echo "Running start script"
+        . "$m_start" \
+            || (echo "Start script failed, try editing '$m_start'" | tee >(log) \
+                && echo "or removing it and retrying by calling 'matapihi -i'" | tee >(log))
+        ;;
+esac
