@@ -28,6 +28,7 @@ RUN --mount=type=secret,id=user_password \
 WORKDIR /home/"$D_USER"
 
 COPY Xvnc-session /home/"$D_USER"/.vnc/Xvnc-session
+COPY .Xresources /home/"$D_USER"/.Xresources
 COPY .matapihi /home/"$D_USER"/.matapihi
 COPY startup /usr/local/bin/
 
