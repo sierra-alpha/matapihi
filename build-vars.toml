@@ -10,7 +10,7 @@
 # prompted to enter a new one
 
 [general-flags]
---tag =  'sierraalpha/matapihi:0.1'
+--tag =  'sierraalpha/matapihi:0.1.0'
 
 [build-args]
 D_USER = 'matapihi'
