@@ -1,16 +1,28 @@
 #!/bin/bash -x
 
+service ssh restart
+
+# If the password is expired we need to wait for user to reset
+# it when connecting to SSH (not great that we're polling it,
+# but couldn't figure a way to be woken for it)
+while chage -l "$D_USER" | grep "password must be changed"
+do
+    sleep 5
+done
+
+# Now that we are logged in make the Xvncserver do a loop
+# It's in the fg to keep the docker container alive.
+su - $D_USER<<EOF
 while true
 do
     vncserver \
         -verbose \
         -useold \
         -cleanstale \
-        -localhost no \
-        -geometry 1024x768 \
-        -depth 24 \
+        -localhost yes \
+        -xdisplaydefaults \
         -fg \
         :0
     sleep 1
 done
-
+EOF

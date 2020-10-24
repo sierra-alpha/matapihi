@@ -8,6 +8,7 @@ RUN apt-get update \
     && apt-get install -y \
     less \
     moreutils \
+    openssh-server \
     sudo \
     tigervnc-standalone-server \
     wget \
@@ -22,9 +23,6 @@ RUN --mount=type=secret,id=vnc_password \
     && printf "$TMP\n$TMP\n\n" | sudo -u "$D_USER" vncpasswd \
     && unset TMP
 
-RUN --mount=type=secret,id=user_password \
-    printf $D_USER":"$(cat /run/secrets/user_password) | chpasswd
-
 WORKDIR /home/"$D_USER"
 
 COPY Xvnc-session /home/"$D_USER"/.vnc/Xvnc-session
@@ -38,6 +36,7 @@ RUN chown -R "$D_USER":"$D_USER" \
     /home/"$D_USER"/.matapihi/* \
     /usr/local/bin/startup
 
-USER "$D_USER"
+ENV D_USER="$D_USER"
+RUN printf "$D_USER:initial" | chpasswd \
+    && passwd -e "$D_USER"
 CMD ["startup"]
-

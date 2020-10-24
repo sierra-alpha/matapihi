@@ -5,5 +5,11 @@
 # user exits program, instead of closing client.
 xrdb -merge ~/.Xresources
 xterm -ls -maximize -e \
-      "PATH=$PATH:~/.matapihi; matapihi -r"
-
+      'PATH=$PATH:~/.matapihi
+       if ! matapihi -r
+       then
+          echo "Matapihi failed, try looking " \
+          "at ~/.matapihi/matapihi.log for details"
+          /bin/bash -i
+       fi
+      '

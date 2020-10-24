@@ -32,6 +32,14 @@ def prompt_for_value(key, build_vars):
     return secret
 
 
+def build_general_flags(build_vars):
+    return [item for sublist in
+             [[tag, value if isinstance(values, list) else values]
+              for tag, values in build_vars.get("general-flags", {}).items()
+              for value in values]
+             for item in sublist]
+
+
 def build_build_args(build_vars):
     return [item for sublist in [["--build-arg", key+"="+value]
                                  for key,value
@@ -77,6 +85,7 @@ def main(raw_args=None):
     mod_env["DOCKER_BUILDKIT"] = "1"
 
     subprocess.run(["docker", "build"]
+                   + build_general_flags(build_vars)
                    + build_build_args(build_vars)
                    + build_secret_args(build_vars)
                    + ["."],

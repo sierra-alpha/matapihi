@@ -9,6 +9,9 @@
 # section exist, and are greater than 6 chars if you don't want to be
 # prompted to enter a new one
 
+[general-flags]
+--tag =  'sierraalpha/matapihi-private:0.1'
+
 [build-args]
 D_USER = 'shaun'
 
