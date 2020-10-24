@@ -36,7 +36,8 @@ get_scripts () {
         exit 1
     fi
 
-    echo "Enter the script url (for wget) you want to run when $in_out Matapihi: "
+    echo "Enter the url for the script to download that you want to run when $in_out Matapihi:"
+    echo "(You're in xterm so [shift] + [insert] or middle mouse button to paste)"
     read script_url
 
     # If input is blank
@@ -55,11 +56,12 @@ get_scripts () {
     fi
 
     echo "You should check the script is as you expect before you run it,"
-    echo "File will now open in a new window, Press enter once review is complete"
+    echo "File will now open in less, press enter to continue"
     echo "Then d to delete the file or any other key to continue"
     read
 
     less -X -n -i -F "$output"
+    echo ""
     echo "Are you happy for this script to execute? (d to destroy it, anything else to continue)"
     read destroy
     if [[ "$destroy" == "d" ]]
