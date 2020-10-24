@@ -10,16 +10,14 @@
 # prompted to enter a new one
 
 [general-flags]
---tag =  'sierraalpha/matapihi-private:0.1'
+--tag =  'sierraalpha/matapihi:0.1'
 
 [build-args]
-D_USER = 'shaun'
+D_USER = 'matapihi'
 
 # Not the actual secrets but the path to the file that contains them
 [secrets]
-root_password = 'root_password.txt'
 vnc_password = 'vnc_password.txt'
-user_password = 'user_password.txt'
 
 # Language for prompts of missing values (currently only english implemented)
 [language]

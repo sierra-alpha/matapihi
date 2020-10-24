@@ -59,7 +59,7 @@ get_scripts () {
     echo "Then d to delete the file or any other key to continue"
     read
 
-    less "$output"
+    less -X -n -i -F -v "$output"
     echo "Are you happy for this script to execute? (d to destroy it, anything else to continue)"
     read destroy
     if [[ "$destroy" == "d" ]]
@@ -86,7 +86,6 @@ check_files () {
         echo "Note: doing so shouldn't kill the session"
     fi
 }
-
 
 while [[ ! -f "${m_start}" || ! -f "${m_exit}" ]]; do
     echo checking files | tee >(log)
