@@ -58,3 +58,11 @@
 ! XTerm settings
 XTerm*faceName: Source Code Pro
 XTerm*faceSize: 10 
+! Overides to help mac users who don't have middle click or insert/prinscreen
+XTerm*selectToClipboard: true
+XTerm*VT100*translations: #override \n\
+    Ctrl Shift <Key>C: copy-selection(SELECT) \n\
+    Ctrl Shift <Key>V: insert-selection(SELECT) \n\
+    Shift <Btn3Down>: start-extend() \n\
+    Shift <Btn3Motion>: select-extend() \n\
+    ~Shift <Btn3Down>:insert-selection(SELECT)
