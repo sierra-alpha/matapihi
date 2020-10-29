@@ -32,6 +32,7 @@ COPY startup /usr/local/bin/
 
 RUN chown -R "$D_USER":"$D_USER" \
     /home/"$D_USER"/.vnc/Xvnc-session \
+    /home/"$D_USER"/.Xresources \
     /home/"$D_USER"/.matapihi \
     /home/"$D_USER"/.matapihi/* \
     /usr/local/bin/startup
