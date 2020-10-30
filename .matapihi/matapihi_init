@@ -37,7 +37,9 @@ get_scripts () {
     fi
 
     echo "Enter the url for the script to download that you want to run when $in_out Matapihi:"
-    echo "(You're in xterm so [shift] + [insert] or middle mouse button to paste)"
+    echo "(You're in xterm so [shift] + [insert] or middle mouse button to paste or"
+    echo "if you prefer right click or ctrl + shift + v, just for the Mac users that"
+    echo "dont have insert or a middle mouse button)"
     read script_url
 
     # If input is blank
