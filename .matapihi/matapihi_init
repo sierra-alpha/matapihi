@@ -16,12 +16,15 @@
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+
+# Defining some filenames fo ruse through out
 m_exit=~/.matapihi/matapihi_exit
 m_init=~/.matapihi/matapihi_init
 m_log=~/.matapihi/matapihi.log
 m_start=~/.matapihi/matapihi_start
 
 
+# A simple log function
 log () {
     if [ "$#" -ne 0 ]; then
         printf '%s\n' "$@"
@@ -31,6 +34,9 @@ log () {
 }
 
 
+# If the start or exit files are missing call this prompt for user to supply an
+# URL to the script and then open it in less for them to confirm they want to
+# run it
 get_scripts () {
     local in_out output script_url
     in_out="$1"
@@ -93,6 +99,8 @@ get_scripts () {
 }
 
 
+# If the relevant files are missing then call the get script function with the
+# required prompt info
 check_files () {
     if [[ ! -f "$m_start" ]]
     then
@@ -107,6 +115,9 @@ check_files () {
     fi
 }
 
+
+# While the required files don't exist keep prompting the users for a valid url
+# or accept a blank to set up the default scripts
 while [[ ! -f "${m_start}" || ! -f "${m_exit}" ]]; do
     echo checking files | tee >(log)
     check_files
