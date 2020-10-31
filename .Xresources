@@ -2,6 +2,7 @@
 ! Scheme: Nasser Alshammari (https://github.com/nashamri/spacemacs-theme)
 ! Kindly provided by:
 ! https://github.com/logico-dev/Xresources-themes/blob/master/base16-spacemacs-256.Xresources
+! Defines the colours used by Xclients, based on the Spacemacs theme
 
 #define base00 #1f2022
 #define base01 #282828
@@ -55,9 +56,11 @@
 *.color20:      base04
 *.color21:      base06
 
+! End of Colour settings from provided resource
+! The following provides some nice defaults for XTerm
 ! XTerm settings
 XTerm*faceName: Source Code Pro
-XTerm*faceSize: 10 
+XTerm*faceSize: 11 
 ! Overides to help mac users who don't have middle click or insert/prinscreen
 XTerm*selectToClipboard: true
 XTerm*VT100*translations: #override \n\
