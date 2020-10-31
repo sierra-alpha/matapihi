@@ -16,10 +16,12 @@
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Launch xterm with my favourite colour scheme and ask user for start up scripts
+# Merge the Xresources mods onto the Xserver for prettier displays
+xrdb -merge ~/.Xresources
+
+# Launch xterm with and ask user for start up scripts
 # if they dont exist then run them and exit to bash if anything goes wrong or
 # user exits program, instead of closing client.
-xrdb -merge ~/.Xresources
 xterm -ls -maximize -e \
       'PATH=$PATH:~/.matapihi
        if ! matapihi -r
