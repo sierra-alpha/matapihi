@@ -31,7 +31,13 @@ usefull if you want to build containers locally with private secrets and host
 them on Docker Hub more securely.
 
 ## How to install
-   `python(3) docker_compose_with_secrets [options]` -d is good for testing 
+
+The image is hosted on docker hub so you can just skip straight to the [How to
+Run](#how-to-run) section if you don't require any extra build args or secrets.
+
+check the configuration in the `build-vars.toml` and then call
+`python(3) docker_compose_with_secrets [options]`, `-d` is good for testing as
+without it the secret files will get wiped on termination of the build script.
 
 ## How to Run
 
