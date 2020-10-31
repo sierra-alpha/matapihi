@@ -95,7 +95,7 @@ call `matapihi -c` to clear the files followed by a `matapihi -i` to
 reinitialise the script prompt, if the init prompt will only ask for URLs to
 replace files that are missing.
 
-It's important that whatever the `matapihi_start` script does that it launcehs
+It's important that whatever the `matapihi_start` script does that it launches
 something blocking in the foreground, if it doesn't matapihi will continue into
 the exit script and the Xserver will close.
    
