@@ -3,6 +3,7 @@
 !build-vars.toml
 !docker_compose_with_secrets.py
 !Dockerfile
+!license.md
 !.matapihi/
 !.matapihi/matapihi
 !.matapihi/matapihi_init
