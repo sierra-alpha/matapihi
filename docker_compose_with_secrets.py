@@ -23,6 +23,8 @@ import subprocess
 import toml
 
 
+# Check all args required are supplied, prompt for them otherwise also validate
+# secret files contain passwords greater than 6 chars
 def check_args(build_vars):
     if '' in build_vars["build-args"].values():
         for key in build_vars["build-args"].keys():
@@ -34,6 +36,7 @@ def check_args(build_vars):
             prompt_for_value(key, build_vars)
 
 
+# prompt for values as requried
 def prompt_for_value(key, build_vars):
     secret = input("Please enter a value for the {}: "
                  .format(build_vars["language"]["english"][key]))
@@ -49,6 +52,7 @@ def prompt_for_value(key, build_vars):
     return secret
 
 
+# If general tags, such as version are here then set them in the correct format
 def build_general_flags(build_vars):
     return [item for sublist in
              [[tag, value if isinstance(values, list) else values]
@@ -57,6 +61,7 @@ def build_general_flags(build_vars):
              for item in sublist]
 
 
+# For build args set them in the correct format
 def build_build_args(build_vars):
     return [item for sublist in [["--build-arg", key+"="+value]
                                  for key,value
@@ -64,7 +69,8 @@ def build_build_args(build_vars):
             for item in sublist]
 
 
-    # rc=my_secret.txt --secret id=root_password,src=my_secret.txt .
+# For secrets build the correct command
+# rc=my_secret.txt --secret id=root_password,src=my_secret.txt .
 def build_secret_args(build_vars):
     return [item for sublist in
             [["--secret", "id=" + key + ",src=" + value]
@@ -98,9 +104,11 @@ def main(raw_args=None):
     # If there is no values in a field then prompt for them
     check_args(build_vars)
 
+    # grab calling environment and add experimental flag for secret building
     mod_env = os.environ.copy()
     mod_env["DOCKER_BUILDKIT"] = "1"
 
+    # call the docker build command with the relevant args
     subprocess.run(["docker", "build"]
                    + build_general_flags(build_vars)
                    + build_build_args(build_vars)
@@ -108,6 +116,7 @@ def main(raw_args=None):
                    + ["."],
                    env=mod_env )
 
+    # remove the secret files if not requested to keep them 
     if not leave_dirty:
         for value in build_vars["secrets"].values():
             os.remove(value)
