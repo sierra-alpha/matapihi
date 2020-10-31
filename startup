@@ -26,7 +26,8 @@ do
     sleep 5
 done
 
-# Now that we are logged in make the Xvncserver do a loop
+# Now that we are logged in make the Xvncserver do a loop, which means we can
+# relaunch the VNC viewer connection without needing to restart the container
 # It's in the fg to keep the docker container alive.
 su - $D_USER<<EOF
 while true
