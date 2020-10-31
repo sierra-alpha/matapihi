@@ -62,6 +62,7 @@ then
 fi
 
 
+# Various files
 m_exit=~/.matapihi/matapihi_exit
 m_init=~/.matapihi/matapihi_init
 m_log=~/.matapihi/matapihi.log
@@ -69,6 +70,7 @@ m_start=~/.matapihi/matapihi_start
 m_run=~/.matapihi/matapihi
 
 
+# logging function
 log () {
     if [ "$#" -ne 0 ]; then
         printf '%s\n' "$@"
@@ -100,7 +102,7 @@ case "$1" in
         echo "Blank to continue exiting, any other key to cancel"
         read leavex
 
-        # If input is blank
+        # If input is blank then continue leaving else bash it up baby
         if test -z "$leavex"
         then
             log "leaving matapihi"
