@@ -10,6 +10,7 @@
     - [How to Run](#how-to-run)
     - [Other usefull docker stuff](#other-usefull-docker-stuff)
     - [Details](#details)
+    - [Matapihi Useage](#matapihi-useage)
     - [License](#license)
     - [Contrbutions](#contrbutions)
 
@@ -93,11 +94,49 @@ If the scripts are incorrect they can be modified manually by inspecting the
 `~/.matapihi/matapihi_start` and/or `~/.matapihi/matapihi_exit` files or you can
 call `matapihi -c` to clear the files followed by a `matapihi -i` to
 reinitialise the script prompt, if the init prompt will only ask for URLs to
-replace files that are missing.
+replace files that are missing. See [Matapihi Useage](#matapihi-useage) for more
+options.
 
 It's important that whatever the `matapihi_start` script does that it launches
 something blocking in the foreground, if it doesn't matapihi will continue into
 the exit script and the Xserver will close.
+
+## Matapihi Useage
+
+```shell
+Usage: matapihi [option]
+
+only one option is supported at a time
+
+NOTE: It works best if supplied scripts for \`matapihi_start\`
+and \`matapihi_exit\` are idempotent, that is they can be executed
+multiple times with the same outcome.
+
+Options:
+
+   -c   clear
+           Clears the previously loaded \`matapihi_start\` and
+           \`matapihi_exit\` scripts
+
+   -h   help
+           Launches this help and exits
+
+   -i   initialise
+           If the scripts \`matapihi_start\` or \`matapihi_exit\`
+           don't exist it prompts the user for an url to wget them
+
+   -q   quit
+           Run the user defined \`matapihi_exit\` script, this should
+           shut down everything and kill the session
+
+   -r   refresh/run
+           If the scripts don't exist call init then;
+           This will re-run the scripts in the order of \`matapihi_exit\`
+           then \`matapihi -s\` and when start closes \`matapihi -q\`
+
+   -s   start
+           This will run the \`matapihi_start\` script
+```
    
 ## License
 
